@@ -2,14 +2,26 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
+use App\Model\TimestampedInterface;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-class Article
+
+// Faire attention sans cette ligne au dessous sur chaque entité la date ne peut se mettre a jour lui-seule
+
+
+#[ORM\HasLifecycleCallbacks]
+
+class Article 
 {
+
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -33,8 +45,10 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
     private $comments;
 
+
+
     #[ORM\ManyToOne(targetEntity: Media::class)]
-    private $Image;
+    private $featuredImage;
 
     public function __construct()
     {
@@ -152,14 +166,16 @@ class Article
         return $this;
     }
 
-    public function getImage(): ?Media
+
+
+    public function getFeaturedImage(): ?Media
     {
-        return $this->Image;
+        return $this->featuredImage;
     }
 
-    public function setImage(?Media $Image): self
+    public function setFeaturedImage(?Media $featuredImage): self
     {
-        $this->Image = $Image;
+        $this->featuredImage = $featuredImage;
 
         return $this;
     }

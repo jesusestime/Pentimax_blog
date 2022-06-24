@@ -1,0 +1,10 @@
+{% if article|length >0 %}
+<div>
+    {% for article in article %}
+        {% include "article/item.html.twig" with {article} %}
+    {% endfor %}
+
+</div>
+{% else %}
+    <p>There is no articles, yet</p>
+{% endif %}
