@@ -3,9 +3,34 @@
 {% block title %}{{ article.slug }}{% endblock %}
 
 {% block body %}
+
     <div class="container mt-5">
         <h1>{{ article.title }}</h1>
         <hr>
         <p>{{ article.content|raw }}</p>
+
+
+        <h2 class="comment-title mt-4">
+            {{ pluralize(article.comments|length,'comment','comments') }}
+        </h2>
+
+        <div class="comment-area mb-4">
+            {{ form_start(commentForm) }}
+            {{ form_widget(commentForm) }}
+            <button type="submit" class="classes btn btn-primary">Send</button> 
+            {{ form_end(commentForm) }}
+        </div>
+
+        
+        
+        <div class="comment-list mt-5">
+            {% for comment in article.comments %}
+                {% include 'comment/index.html.twig' with {comment} %}
+            {% endfor %}
+        </div>
+
+        <hr>
     </div>
+
+
 {% endblock %}

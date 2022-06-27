@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+// Faire attention sans cette ligne au dessous sur chaque entité la date ne peut se mettre a jour lui-seule
 use App\Entity\Traits\Timestampable;
 use App\Model\TimestampedInterface;
+
+
+
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
