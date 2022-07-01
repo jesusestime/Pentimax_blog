@@ -2,19 +2,32 @@
           <header class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand text-dark" href="#">Mon Blog</a>
+                        <a class="navbar-brand text-dark" href="{{ path('app_home') }}">Mon Blog</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                <a class="nav-link text-dark" href="{{ path('app_register') }}">Registrer</a> 
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-dark" href="#">Login</a>
-                                </li>
-                            </ul>
+                            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                    <a class="nav-link text-dark" href="{{ path('app_register') }}">Registrer</a> 
+                                    </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link text-dark" href="{{ path('app_login') }}">Login</a> 
+                                    </li>
+                                </ul>
+                            {% else %}
+                            <div class="dropdown ms-auto">
+                                <a class=" ps-0 nav nav-link text-black dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ app.user.username|capitalize }}
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdmin">
+                                    <li><a class="dropdown-item" href="{{ path('app_user',{username : app.user.username}) }}">Profil</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Log out</a></li>
+                                </ul>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     </nav>

@@ -14,16 +14,18 @@
             {{ pluralize(article.comments|length,'comment','comments') }}
         </h2>
 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="comment-area mb-4">
             {{ form_start(commentForm) }}
             {{ form_widget(commentForm) }}
             <button type="submit" class="classes btn btn-primary">Send</button> 
             {{ form_end(commentForm) }}
         </div>
+        {% endif %}
 
         
         
-        <div class="comment-list mt-5">
+        <div class="comment-list mt-4">
             {% for comment in article.comments %}
                 {% include 'comment/index.html.twig' with {comment} %}
             {% endfor %}

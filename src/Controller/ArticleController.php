@@ -26,8 +26,8 @@ class ArticleController extends AbstractController
               
         if($commentForm->isSubmitted() && $commentForm->isValid())
         {
-            
-            $comment->setUser($userRepo->findOneBy(['id'=>1]));
+            $user=$this->getUser();
+            $comment->setUser($user);
             $comment->setArticle($article);
 
             $em->persist($comment);

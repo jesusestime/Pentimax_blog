@@ -62,4 +62,8 @@ class Media
 
         return $this;
     }
+    function __toString()
+    {
+        return $this->name;
+    }
 }
